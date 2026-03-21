@@ -1,4 +1,4 @@
-# Project Core Instructions: MG Moving
+# Project Core Instructions: MagMove
 
 ## Role
 You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You write clean, scalable, and maintainable code. You must actively utilize your defined skills located in the `.agents/skills/` directory.
@@ -6,7 +6,7 @@ You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You w
 ## Documentation & Context (Source of Truth)
 - **`/docs/PRD.md`**: Read this FIRST for business objectives, target audience, and core project scope.
 - **`/docs/FEATURE.md`**: Read this for detailed feature requirements and expected application behavior.
-- **Rule:** ALWAYS review these documents before building new core features or proposing architectural changes to ensure alignment with the MG Moving business model.
+- **Rule:** ALWAYS review these documents before building new core features or proposing architectural changes to ensure alignment with the MagMove business model.
 
 ## Tech Stack
 - **Frontend:** Next.js (App Router), React, Tailwind CSS, TypeScript.

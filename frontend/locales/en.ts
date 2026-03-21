@@ -1,11 +1,11 @@
 export const en = {
   nav: {
     home: "Home",
-    services: "Our Services",
-    fleet: "MG Moving Fleet",
-    whyChooseUs: "Why Choose MG Moving",
+    services: "Services",
+    fleet: "MagMove Fleet",
+    whyChooseUs: "Why MagMove",
     contact: "Contact Us",
-    getQuote: "Get a Premium Quote",
+    getQuote: "Get a Quote",
   },
   hero: {
     subtitle: "Phuket's Elite Logistics",
@@ -13,8 +13,8 @@ export const en = {
     titleHighlight: "Premium",
     titleEnd: " Moving in Phuket",
     description: "A premium moving experience tailored for you. From high-end villas to corporate offices, we handle your world with precision and white-glove care.",
-    primaryButton: "Book a Premium Moving Experience",
-    secondaryButton: "View Our Fleet",
+    primaryButton: "Book now",
+    secondaryButton: "MagMove Fleet",
     insurance: "Fully Insured",
     peaceOfMind: "Peace of mind guaranteed",
     testimonial: '"The team handled our antiques with incredible care. Truly elite service."',
@@ -24,7 +24,7 @@ export const en = {
     titleStart: "Crafting the ",
     titleHighlight: "Gold Standard",
     titleEnd: " of Moving in Phuket",
-    p1: "At MG Moving, we believe that relocation is more than just transporting items; it's about moving your life, your memories, and your future. Born in the heart of Phuket, our company was founded on the principle that luxury service shouldn't be the exception—it should be the standard.",
+    p1: "At MagMove, we believe that relocation is more than just transporting items; it's about moving your life, your memories, and your future. Born in the heart of Phuket, our company was founded on the principle that luxury service shouldn't be the exception—it should be the standard.",
     p2: "Our dedication to precision is matched only by our local expertise. We navigate the unique logistics of the island with ease, ensuring that every piece of furniture, every heirloom, and every office asset is treated with the white-glove care it deserves.",
     stat1Val: "100%",
     stat1Label: "Client Satisfaction",
@@ -54,8 +54,8 @@ export const en = {
     },
   },
   why: {
-    label: "The MG Difference",
-    title: "Why Choose MG Moving",
+    label: "The MagMove Difference",
+    title: "Why Choose MagMove",
     staff: {
       title: "Experienced Staff",
       desc: "Our crew is professionally trained in white-glove handling and logistical precision.",
@@ -70,7 +70,7 @@ export const en = {
     },
   },
   fleet: {
-    title: "The MG Moving Fleet",
+    title: "The MagMove Fleet",
     desc: "Modern, climate-controlled, and immaculately maintained vehicles designed for safe transport in Thailand's tropical climate.",
     verified: "Verified Safe",
     sixWheel: {
@@ -109,6 +109,24 @@ export const en = {
     address1: "Si Sunthon Office, Phuket",
     address2: "Thalang District, Phuket 83110",
     address3: "Thailand",
-    copyright: "© 2024 MG Moving Phuket. Professional Logistics & White-Glove Service.",
+    copyright: "© 2024 MagMove Phuket. Professional Logistics & Premium Service.",
+  },
+  booking: {
+    heroTitle: "Request Premium Quote",
+    heroDesc: "Tell us about your moving needs, and our concierge team will reach out with a tailored logistics plan.",
+    serviceType: "Service Type",
+    houseMoving: "House, Office & Condo Moving",
+    motorcycle: "Motorcycle Transport",
+    local: "Local Delivery (Phuket)",
+    interProvincial: "Inter-provincial Transport (Phuket to Bangkok)",
+    pickup: "Pickup Location",
+    dropoff: "Drop-off Location",
+    dateTime: "Preferred Date & Time",
+    contactName: "Contact Name",
+    contactPhone: "Contact Phone",
+    submitButton: "Request Premium Quote",
+    successMsg: "Your quote request has been securely submitted. A MagMove concierge will contact you shortly.",
+    errorMsg: "There was an error submitting your request. Please try again or contact us directly.",
+    returnHome: "Return to Home"
   }
 };

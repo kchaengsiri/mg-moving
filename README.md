@@ -1,6 +1,6 @@
-# 🚚 MG Moving - Premium Logistics Platform
+# 🚚 MagMove - Premium Logistics Platform
 
-A modern, full-stack web application designed for **MG Moving**, a premium moving and logistics service based in Phuket, Thailand. The platform features dynamic distance-based pricing, an AI-powered customer service chatbot, and a trustworthy, high-end user interface.
+A modern, full-stack web application designed for **MagMove**, a premium moving and logistics service based in Phuket, Thailand. The platform features dynamic distance-based pricing, an AI-powered customer service chatbot, and a trustworthy, high-end user interface.
 
 ## ✨ Key Features
 - **Premium Landing Page:** Designed with Stitch MCP and built with 21st.dev components, featuring a Sapphire Blue and Champagne Gold color palette.

@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Truck } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowRight, Truck, Star } from "lucide-react";
 
 export function Hero() {
   return (
