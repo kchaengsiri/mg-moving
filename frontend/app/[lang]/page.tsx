@@ -1,7 +1,5 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   ShieldCheck, 
   Building2, 
@@ -18,20 +16,12 @@ import {
   Mail,
   Globe
 } from "lucide-react";
-import { en } from "../locales/en";
-import { th } from "../locales/th";
+import { en } from "../../locales/en";
+import { th } from "../../locales/th";
 
-export default function Home() {
-  const [lang, setLang] = useState<"en" | "th">("en");
-  const t = lang === "en" ? en : th;
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
-
-  const toggleLanguage = () => {
-    setLang(lang === "en" ? "th" : "en");
-  };
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const t = lang === "th" ? th : en;
 
   return (
     <main className="min-h-screen">
@@ -49,14 +39,14 @@ export default function Home() {
             <a className="font-headline tracking-tight text-sm font-semibold uppercase text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-tertiary-fixed-dim transition-colors" href="#contact">{t.nav.contact}</a>
           </div>
           <div className="flex items-center gap-6">
-            <button 
-              onClick={toggleLanguage}
+            <Link 
+              href={lang === "en" ? "/th" : "/en"}
               className="flex items-center gap-2 text-primary dark:text-slate-300 hover:text-tertiary-fixed-dim transition-colors font-label font-bold text-sm tracking-wider"
               aria-label="Toggle language"
             >
               <Globe className="w-4 h-4" />
               {lang === "en" ? "TH" : "EN"}
-            </button>
+            </Link>
             <button className="bg-tertiary-fixed text-on-tertiary-fixed px-6 py-3 rounded-md font-semibold text-sm hover:opacity-90 transition-all duration-300 active:scale-95 gold-glow uppercase tracking-wider hidden sm:block">
               {t.nav.getQuote}
             </button>
