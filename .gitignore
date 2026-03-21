@@ -1,4 +1,6 @@
-tmp
+.DS_Store
 
 .agents
 .env
+
+tmp
