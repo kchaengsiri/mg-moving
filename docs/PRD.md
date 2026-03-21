@@ -1,16 +1,16 @@
 # Product Requirements Document (PRD)
-**Project:** Moving Truck Service Web App (Phuket Area)
+**Project:** MagMove - Premium Logistics & Moving Web App (Phuket Area)
 
 ## 1. Overview
-A web application providing booking and information services for a closed-body pickup truck logistics business based in Phuket, Thailand. Services include house/condo moving, motorcycle transport, and general logistics locally and inter-provincially.
+A premium web application providing "White-Glove" booking and information services for a highly secure moving and logistics business based in Phuket, Thailand. Services strictly encompass luxury house/condo moving, motorcycle transport, and commercial logistics locally and inter-provincially.
 
 ## 2. Target Audience
-- Locals and expats in Phuket moving residences.
-- Businesses needing ad-hoc transport.
-- Customers transporting items (e.g., motorcycles) between Phuket and other provinces (Phang Nga, Krabi, Bangkok).
+- Luxury villas, locals, and expats in Phuket executing high-value residence moves.
+- Corporate businesses requiring insured transport.
+- Customers transporting premium items (e.g., motorcycles) between Phuket and other provinces (Phang Nga, Krabi, Bangkok).
 
 ## 3. Core Objectives
-- Create a trustworthy online presence (Landing Page & Portfolio).
-- Streamline the booking process with dynamic distance-based pricing using Google Maps API.
-- Provide instant customer support and price estimation via an AI Chatbot (RAG).
-- Simplify management via a JSON-based MVP backend and Next.js Admin dashboard.
+- Create a trustworthy online premium presence (Landing Page & Dynamic Portfolios).
+- Streamline the Booking and Quote Funnel targeting direct conversion.
+- Provide multi-lingual English (EN) and Thai (TH) interfaces natively.
+- Simplify Management via an internal `/admin` MVP infrastructure backed by secure Python JSON endpoints.

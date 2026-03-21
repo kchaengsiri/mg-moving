@@ -24,6 +24,7 @@ You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You w
 1. **Frontend (`/frontend`):** Handles Landing Page, Booking flow, and Admin Panel (as a protected route). Do NOT process heavy business logic or expose external API keys (like Google Maps) here.
 2. **Backend (`/backend`):** Handles all business logic, Google Maps API distance calculations, and AI Chatbot (RAG) operations.
 3. **Data Management:** The Backend is the ONLY entity allowed to read/write to JSON files (`bookings.json`, `portfolio.json`, `chat_history.json`, `settings.json`, `pricing_rules.json`). The Frontend MUST call API endpoints. Adhere strictly to the `json-db-manager` skill.
+4. **Current Implementation Scope:** The global rebrand to **MagMove** has strictly occurred. The App Router structurally executes English/Thai i18n. The `/book` UX converts traffic into leads, while the Python FastAPI engine powers the `/admin` Operations Dashboard via the `bookings.json` lockfile database.
 
 ## Coding Standards & Logging
 - Adhere to the `code-reviewer` skill for Next.js and FastAPI best practices (e.g., proper `async/await` handling, no blocking operations).
