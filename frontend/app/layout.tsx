@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { Manrope, Inter } from "next/font/google";
+import { Manrope, Inter, IBM_Plex_Sans_Thai } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({
-  variable: "--font-manrope",
   subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
 });
 
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const ibmPlexSansThai = IBM_Plex_Sans_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-ibm-plex-sans-thai",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "MG Moving | Premium Logistics & White-Glove Service Phuket",
-  description: "A premium moving experience tailored for you. From high-end villas to corporate offices, we handle your world with precision and white-glove care.",
+  title: "MG Moving - Premium White-Glove Logistics",
+  description: "Phuket's leading premium moving and logistics service. White-glove handling, secure transport, and absolute peace of mind.",
 };
 
 export default function RootLayout({
@@ -24,8 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${manrope.variable} ${inter.variable} h-full antialiased`}
+      className={`${manrope.variable} ${inter.variable} ${ibmPlexSansThai.variable} h-full antialiased scroll-smooth`}
     >
       <body className="font-body bg-surface text-on-background min-h-full flex flex-col">{children}</body>
     </html>

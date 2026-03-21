@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-headline: var(--font-manrope), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-label: var(--font-inter), sans-serif;
+  --font-headline: var(--app-font-headline);
+  --font-body: var(--app-font-body);
+  --font-label: var(--app-font-label);
 
   --color-on-secondary-container: #5f6365;
   --color-primary-fixed-dim: #adc7f7;
@@ -70,4 +70,18 @@
 body {
   background-color: var(--color-surface);
   color: var(--color-on-background);
+}
+
+@layer base {
+  :root {
+    --app-font-headline: var(--font-manrope), sans-serif;
+    --app-font-body: var(--font-inter), sans-serif;
+    --app-font-label: var(--font-inter), sans-serif;
+  }
+
+  html[lang="th"], .lang-th {
+    --app-font-headline: var(--font-ibm-plex-sans-thai), sans-serif;
+    --app-font-body: var(--font-ibm-plex-sans-thai), sans-serif;
+    --app-font-label: var(--font-ibm-plex-sans-thai), sans-serif;
+  }
 }
