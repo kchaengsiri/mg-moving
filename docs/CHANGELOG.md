@@ -34,3 +34,5 @@
 - *11:15* - `Added` - Orchestrated the global `AdminSidebar` component across the Operations Dashboard yielding Dark Sapphire aesthetics and deep Next.js App Router isolation.
 - *11:18* - `Changed` - Refactored Service Pricing Manager natively to explicitly map 'Edit' and 'Delete' administrative triggers bringing the Phase 11 CRUD API cycle seamlessly into view.
 - *11:24* - `Changed` - Redesigned the Bookings Database `Action` column transforming naked text states into interactive, No-Line Dropdown layouts triggering `PATCH` operations autonomously.
+- *11:50* - `Changed` - Refined GEMINI.md scope for Portfolio and AI Chatbot.
+- *11:55* - `Added` - Implemented Notification Settings UI and JSON endpoints.

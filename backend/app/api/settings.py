@@ -5,6 +5,11 @@ import uuid
 
 router = APIRouter()
 services_db = JsonDB("services.json")
+notifications_db = JsonDB("notifications.json")
+
+class NotificationSettingsModel(BaseModel):
+    line_notify_token: str
+    telegram_chat_id: str
 
 class ServiceModel(BaseModel):
     name_en: str
@@ -75,3 +80,32 @@ async def delete_service(service_id: str):
     except Exception as e:
         print(f"Database error: {e}")
         raise HTTPException(status_code=500, detail="Error deleting service")
+
+@router.get("/notifications")
+async def get_notifications():
+    """Retrieves notification settings."""
+    try:
+        data = await notifications_db.read_all()
+        # If the file is empty or missing, read_all might return an empty list or dict.
+        if isinstance(data, list):
+            return data[0] if data else {"line_notify_token": "", "telegram_chat_id": ""}
+        if not data:
+            return {"line_notify_token": "", "telegram_chat_id": ""}
+        return data
+    except Exception as e:
+        print(f"Database error: {e}")
+        return {"line_notify_token": "", "telegram_chat_id": ""}
+
+@router.post("/notifications")
+async def update_notifications(settings: NotificationSettingsModel):
+    """Updates notification settings."""
+    try:
+        new_settings = {
+            "line_notify_token": settings.line_notify_token,
+            "telegram_chat_id": settings.telegram_chat_id
+        }
+        await notifications_db.rewrite_all(new_settings)
+        return new_settings
+    except Exception as e:
+        print(f"Database error: {e}")
+        raise HTTPException(status_code=500, detail="Error updating notification settings")

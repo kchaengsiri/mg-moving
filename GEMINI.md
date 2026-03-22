@@ -22,8 +22,10 @@ You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You w
 
 ## Architecture Rules
 1. **Frontend (`/frontend`):** Handles Landing Page, Booking flow, and Admin Panel (as a protected route). Do NOT process heavy business logic or expose external API keys (like Google Maps) here.
-2. **Backend (`/backend`):** Handles all business logic, Google Maps API distance calculations, and AI Chatbot (RAG) operations.
-3. **Data Management:** The Backend is the ONLY entity allowed to read/write to JSON files (`bookings.json`, `portfolio.json`, `chat_history.json`, `settings.json`, `pricing_rules.json`). The Frontend MUST call API endpoints. Adhere strictly to the `json-db-manager` skill.
+2. **Backend (`/backend`):** Handles all business logic, Google Maps API distance calculations, and the AI Chatbot operations.
+    - **AI Chatbot:** A future customer support agent designed to answer logistics, routing, and pricing queries.
+3. **Data Management:** The Backend is the ONLY entity allowed to read/write to JSON files (`bookings.json`, `portfolio.json`, `chat_history.json`, `settings.json`, `pricing_rules.json`, `notifications.json`). The Frontend MUST call API endpoints. Adhere strictly to the `json-db-manager` skill.
+    - **Portfolio:** A gallery showcasing past premium moving jobs and high-quality packaging to build trust. This will eventually be managed via `/admin/portfolio` and saved to `portfolio.json`.
 4. **Current Implementation Scope:** The global rebrand to **MagMove** has strictly occurred. The App Router structurally executes English/Thai i18n. The `/book` UX converts traffic into leads, while the Python FastAPI engine powers the `/admin` Operations Dashboard via the `bookings.json` lockfile database.
 
 ## Coding Standards & Logging
