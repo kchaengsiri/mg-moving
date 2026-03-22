@@ -16,14 +16,14 @@ export const en = {
     secondaryButton: "MagMove Fleet",
     insurance: "Fully Insured",
     peaceOfMind: "Peace of mind guaranteed",
-    testimonial: '"The team handled our antiques with incredible care. Truly elite service."',
+    testimonial: '"The team handled our antiques with incredible care. Truly white-glove service."',
   },
   about: {
     label: "Established Excellence",
     titleStart: "Crafting the ",
     titleHighlight: "Gold Standard",
     titleEnd: " of Moving in Phuket",
-    p1: "At MagMove, we believe that relocation is more than just transporting items; it's about moving your life, your memories, and your future. Born in the heart of Phuket, our company was founded on the principle that luxury service shouldn't be the exception—it should be the standard.",
+    p1: "At MagMove, we believe that relocation is more than just transporting items; it's about moving your life, your memories, and your future. Born in the heart of Phuket, our company was founded on the principle that trusted, professional service shouldn't be the exception—it should be the standard.",
     p2: "Our dedication to precision is matched only by our local expertise. We navigate the unique logistics of the island with ease, ensuring that every piece of furniture, every heirloom, and every office asset is treated with the white-glove care it deserves.",
     stat1Val: "100%",
     stat1Label: "Client Satisfaction",
@@ -32,7 +32,7 @@ export const en = {
   },
   services: {
     label: "Comprehensive Solutions",
-    title: "Our Premium Services",
+    title: "Our Services",
     houseProps: {
       title: "House, Office & Condo Moving",
       desc: "End-to-end relocation services. From careful furniture disassembly to strategic office setup, our white-glove team manages every detail so you don't have to.",
@@ -43,7 +43,7 @@ export const en = {
     },
     motorcycleProps: {
       title: "Motorcycle Transport",
-      desc: "Specialized ramps and securing systems for premium bikes and scooters.",
+      desc: "Specialized ramps and securing systems for motorcycles and scooters — handled with care.",
       action: "Learn more",
     },
     localProps: {
@@ -64,8 +64,8 @@ export const en = {
       desc: "Monitor your shipment in real-time. Full transparency from pickup to final delivery.",
     },
     service: {
-      title: "White-glove Service",
-      desc: "Premium packing materials and meticulous attention to detail for fragile items.",
+      title: "White-Glove Service",
+      desc: "High-quality packing materials and meticulous attention to detail for fragile and valuable items.",
     },
   },
   fleet: {
@@ -85,7 +85,7 @@ export const en = {
     moto: {
       title: "Motorcycle Carrier",
       badge: "Specialty",
-      desc: "Equipped with custom hydraulic lifts and soft-tie security straps for premium motorcycles.",
+      desc: "Equipped with custom hydraulic lifts and soft-tie security straps for motorcycles.",
     },
   },
   footer: {
@@ -108,7 +108,7 @@ export const en = {
     address1: "Si Sunthon Office, Phuket",
     address2: "Thalang District, Phuket 83110",
     address3: "Thailand",
-    copyright: "© 2024 MagMove Phuket. Professional Logistics & Premium Service.",
+    copyright: "© 2024 MagMove Phuket. Professional Logistics & Trusted Moving Service.",
   },
   booking: {
     heroTitle: "Book Your Move",
@@ -137,7 +137,7 @@ export const en = {
   ourWork: {
     label: "Trusted by Phuket's Best",
     title: "Our Work",
-    desc: "Browse a selection of our recent premium moving and packaging operations.",
+    desc: "Browse a selection of our recent professional moving and packaging operations.",
     noItems: "Portfolio coming soon.",
   }
 };

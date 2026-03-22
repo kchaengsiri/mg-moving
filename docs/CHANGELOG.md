@@ -44,3 +44,6 @@
 - *01:05* - `Added` - Created Portfolio CRUD API (`GET`, `POST`, `PUT`, `DELETE` at `/api/portfolio`) with `portfolio.json` database.
 - *01:08* - `Added` - Built Admin Portfolio Manager at `/admin/portfolio` with full CRUD UI following White-Glove No-Line design system.
 - *01:12* - `Added` - Integrated "Our Work" public gallery section on landing page with EN/TH i18n. Renders conditionally via server-side fetch — invisible when portfolio is empty.
+- *01:28* - `Added` - Created `POST /api/upload` endpoint in FastAPI to accept image uploads and save to `/frontend/public/uploads/portfolio/` for direct Next.js serving.
+- *01:30* - `Changed` - Rewrote Admin Portfolio Manager (`/admin/portfolio`) to use a real file `<input>` with live preview and a two-step upload flow (upload first → get URL → save item).
+- *01:32* - `Changed` - Global UX copy pivot: replaced "Premium" with trust-building alternatives ("Professional", "Trusted", "White-Glove") across EN/TH locales and all site copy.
