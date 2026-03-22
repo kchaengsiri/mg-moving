@@ -8,7 +8,8 @@ services_db = JsonDB("services.json")
 notifications_db = JsonDB("notifications.json")
 
 class NotificationSettingsModel(BaseModel):
-    line_notify_token: str
+    line_channel_access_token: str
+    line_user_id: str
     telegram_chat_id: str
 
 class ServiceModel(BaseModel):
@@ -88,20 +89,21 @@ async def get_notifications():
         data = await notifications_db.read_all()
         # If the file is empty or missing, read_all might return an empty list or dict.
         if isinstance(data, list):
-            return data[0] if data else {"line_notify_token": "", "telegram_chat_id": ""}
+            return data[0] if data else {"line_channel_access_token": "", "line_user_id": "", "telegram_chat_id": ""}
         if not data:
-            return {"line_notify_token": "", "telegram_chat_id": ""}
+            return {"line_channel_access_token": "", "line_user_id": "", "telegram_chat_id": ""}
         return data
     except Exception as e:
         print(f"Database error: {e}")
-        return {"line_notify_token": "", "telegram_chat_id": ""}
+        return {"line_channel_access_token": "", "line_user_id": "", "telegram_chat_id": ""}
 
 @router.post("/notifications")
 async def update_notifications(settings: NotificationSettingsModel):
     """Updates notification settings."""
     try:
         new_settings = {
-            "line_notify_token": settings.line_notify_token,
+            "line_channel_access_token": settings.line_channel_access_token,
+            "line_user_id": settings.line_user_id,
             "telegram_chat_id": settings.telegram_chat_id
         }
         await notifications_db.rewrite_all(new_settings)

@@ -19,7 +19,8 @@ async def dispatch_notifications(booking_record: dict):
         data = await notifications_db.read_all()
         settings = data[0] if isinstance(data, list) and data else (data if isinstance(data, dict) else {})
         
-        line_token = settings.get("line_notify_token")
+        line_channel_access_token = settings.get("line_channel_access_token")
+        line_user_id = settings.get("line_user_id")
         telegram_id = settings.get("telegram_chat_id")
         
         message = (
@@ -32,14 +33,19 @@ async def dispatch_notifications(booking_record: dict):
         )
         
         def send():
-            if line_token:
+            if line_channel_access_token and line_user_id:
                 try:
-                    line_data = urllib.parse.urlencode({"message": message}).encode("utf-8")
-                    req = urllib.request.Request("https://notify-api.line.me/api/notify", data=line_data)
-                    req.add_header("Authorization", f"Bearer {line_token}")
+                    payload = {
+                        "to": line_user_id,
+                        "messages": [{"type": "text", "text": message}]
+                    }
+                    line_data = json.dumps(payload).encode("utf-8")
+                    req = urllib.request.Request("https://api.line.me/v2/bot/message/push", data=line_data)
+                    req.add_header("Authorization", f"Bearer {line_channel_access_token}")
+                    req.add_header("Content-Type", "application/json")
                     urllib.request.urlopen(req, timeout=5)
                 except Exception as e:
-                    print(f"Line Notify Error: {e}")
+                    print(f"LINE Messaging API Error: {e}")
                     
             if telegram_id:
                 bot_token = os.getenv("TELEGRAM_BOT_TOKEN")

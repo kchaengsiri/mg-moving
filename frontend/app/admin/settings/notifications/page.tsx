@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { Loader2, Save, BellRing } from "lucide-react";
 
 type NotificationSettings = {
-  line_notify_token: string;
+  line_channel_access_token: string;
+  line_user_id: string;
   telegram_chat_id: string;
 };
 
 export default function NotificationSettingsPage() {
   const [settings, setSettings] = useState<NotificationSettings>({
-    line_notify_token: "",
+    line_channel_access_token: "",
+    line_user_id: "",
     telegram_chat_id: "",
   });
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,8 @@ export default function NotificationSettingsPage() {
         if (res.ok) {
           const data = await res.json();
           setSettings({
-            line_notify_token: data.line_notify_token || "",
+            line_channel_access_token: data.line_channel_access_token || "",
+            line_user_id: data.line_user_id || "",
             telegram_chat_id: data.telegram_chat_id || "",
           });
         }
@@ -81,19 +84,35 @@ export default function NotificationSettingsPage() {
           onSubmit={handleSave} 
           className="bg-white rounded-[20px] shadow-[0_12px_40px_rgba(24,28,30,0.06)] p-8 md:p-10 font-body flex flex-col gap-8"
         >
-          {/* Section: Line Notify */}
-          <div className="flex flex-col gap-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
-              Line Notify Token
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Line Developer Notify Token"
-              value={settings.line_notify_token}
-              onChange={(e) => setSettings({ ...settings, line_notify_token: e.target.value })}
-              className="w-full bg-[#f7fafc] border-none p-4 rounded-xl shadow-xs text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:font-normal placeholder:text-slate-400"
-            />
-            <p className="text-xs text-slate-400 pl-1">Used to dispatch alerts directly to your operations team via Line Manager.</p>
+          {/* Section: Line Messaging API */}
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+                LINE Channel Access Token
+              </label>
+              <input
+                type="password"
+                placeholder="Enter long-lived Channel Access Token"
+                value={settings.line_channel_access_token}
+                onChange={(e) => setSettings({ ...settings, line_channel_access_token: e.target.value })}
+                className="w-full bg-[#f7fafc] border-none p-4 rounded-xl shadow-xs text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:font-normal placeholder:text-slate-400"
+              />
+              <p className="text-xs text-slate-400 pl-1">Target your official Messaging API bot Channel.</p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">
+                LINE User ID
+              </label>
+              <input
+                type="text"
+                placeholder="Enter target LINE User ID or Group ID"
+                value={settings.line_user_id}
+                onChange={(e) => setSettings({ ...settings, line_user_id: e.target.value })}
+                className="w-full bg-[#f7fafc] border-none p-4 rounded-xl shadow-xs text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:font-normal placeholder:text-slate-400"
+              />
+              <p className="text-xs text-slate-400 pl-1">The exact UID pushing notifications directly to your management phone.</p>
+            </div>
           </div>
 
           <hr className="border-surface-container/30" />
