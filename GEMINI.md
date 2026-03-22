@@ -30,3 +30,17 @@ You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You w
 - Adhere to the `code-reviewer` skill for Next.js and FastAPI best practices (e.g., proper `async/await` handling, no blocking operations).
 - Document complex logic clearly.
 - **CHANGELOG:** You MUST update `/docs/CHANGELOG.md` using the exact time-based format defined in your `tech-lead` skill whenever completing ANY significant task, component integration, or file creation.
+
+## Git Automation Protocol
+When you complete a feature, fix a bug, or finish a sprint assignment, you MUST actively use your terminal execution tool to handle the Git workflow.
+Execute these exact commands in the terminal:
+1. Run `git status` to review the changed files.
+2. Run `git add .` to stage all changes.
+3. Run `git commit -m "<type>(<scope>): <short description>"` (Use Conventional Commits like `feat:`, `fix:`, `docs:`, `refactor:`).
+4. **CRITICAL:** Do NOT execute `git push`. Stop and ask me: "I have committed the changes. Would you like me to push them to the remote repository?" If I say "yes", then run `git push` via the terminal.
+
+## Context Recovery Protocol (Crucial for Session Resumption)
+When starting a new session or resuming after a break, you must read the following files in this exact order to regain context:
+1. `PRD.md` -> Check the "Current Sprint & Status" and "MVP Features" sections.
+2. `docs/CHANGELOG.md` -> Review the last 3 entries.
+3. Once read, briefly summarize the current state of the project and explicitly propose the NEXT immediate step for the user.

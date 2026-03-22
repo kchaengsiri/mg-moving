@@ -20,3 +20,17 @@
 - *02:15* - `Added` - Implemented MagMove Admin Dashboard UI at `frontend/app/admin` completely circumventing i18n Next.js locale routing engine via Edge middleware.
 - *02:25* - `Changed` - Built the interactive operational UI grids manually enforcing the 'White-Glove No-Line Rule' via alternating `odd:bg-[#f7fafc] even:bg-white` tonal combinations.
 - *02:30* - `Added` - Extended Python JSON-DB REST protocol via FastAPI endpoints to read (`GET /api/bookings`) data grids globally, and mutate (`PATCH /api/bookings/{id}`) async tracker statuses.
+- *03:45* - `Added` - Replaced static Booking locations with OpenStreetMap Nominatim interactive Autocomplete dropdowns secured by a 500ms debounce loop.
+- *03:50* - `Added` - Integrated OSRM Routing Engine calculating distance dynamically in KM to display our `1500 Base + 50/km` dynamic pricing strategy gracefully inside a No-Line 'Estimation Card'.
+- *10:31* - `Changed` - De-escalated 'Premium' UX copy anxiety globally pushing `Book Your Move` across all Call-to-Actions in EN and TH dictionaries.
+- *10:35* - `Added` - Orchestrated Python REST Engine managing the new `/api/settings/services` endpoint bound to a local JSON Database architecture.
+- *10:40* - `Added` - Constructed an interactive `/admin/settings` Dashboard enforcing White-Glove design aesthetics for granular manipulation of logistics rate rules (`base_price` and `price_per_km`).
+- *10:45* - `Changed` - Forged real-time OSRM calculations inside `BookingForm.tsx` to pull natively from the dynamic Services backend matrix predicting live prices instead of making hardcoded variable assumptions.
+- *10:48* - `Fixed` - Resolved `FileNotFoundError` during Docker boot sequences by removing redundant `app/data/` prefixes from `JsonDB` instantiations inside the `settings` router.
+- *10:55* - `Added` - Secured the Operations Dashboard by scaffolding an MVP authentication pipeline directly powered by Python FastAPI `/api/auth/login`.
+- *10:58* - `Added` - Crafted a dedicated `/admin/login` interface applying Dark Sapphire and Champagne Gold aesthetic tokens to completely override backend template layouts.
+- *11:00* - `Changed` - Hydrated Next.js Edge `middleware.ts` to actively trap unauthenticated traffic entering `/admin` environments without a valid `magmove_admin_token` cookie.
+- *11:05* - `Fixed` - Injected `load_dotenv()` within the Python Auth module preventing Docker isolation from breaking `.env` credential ingestion.
+- *11:15* - `Added` - Orchestrated the global `AdminSidebar` component across the Operations Dashboard yielding Dark Sapphire aesthetics and deep Next.js App Router isolation.
+- *11:18* - `Changed` - Refactored Service Pricing Manager natively to explicitly map 'Edit' and 'Delete' administrative triggers bringing the Phase 11 CRUD API cycle seamlessly into view.
+- *11:24* - `Changed` - Redesigned the Bookings Database `Action` column transforming naked text states into interactive, No-Line Dropdown layouts triggering `PATCH` operations autonomously.

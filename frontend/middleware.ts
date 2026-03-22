@@ -11,7 +11,16 @@ export function middleware(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathname.startsWith('/admin')) return NextResponse.next();
+  if (pathname.startsWith('/admin')) {
+    if (pathname.startsWith('/admin/login')) {
+      return NextResponse.next();
+    }
+    const authToken = request.cookies.get('magmove_admin_token');
+    if (!authToken) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+    return NextResponse.next();
+  }
   if (pathnameHasLocale) return NextResponse.next();
 
   // Rewrite root / to /en seamlessly without a 307 redirect

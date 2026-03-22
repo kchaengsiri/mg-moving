@@ -49,7 +49,7 @@ export default async function BookPage({ params }: { params: Promise<{ lang: str
 
         <div className="bg-white rounded-2xl shadow-[0_12px_40px_rgba(24,28,30,0.06)] p-8 md:p-12 border border-surface-container">
           {/* Server Component passes the translated dictionary heavily to the interactive Client UI */}
-          <BookingForm t={t} />
+          <BookingForm t={t} lang={lang} />
         </div>
       </div>
 

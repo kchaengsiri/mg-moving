@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import bookings
+from app.api import bookings, settings, auth
 
 app = FastAPI(
     title="MagMove OS API",
@@ -19,6 +19,8 @@ app.add_middleware(
 
 # Mount Routers
 app.include_router(bookings.router, prefix="/api", tags=["bookings"])
+app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 
 @app.get("/health", tags=["system"])
 def health_check():

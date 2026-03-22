@@ -3,9 +3,8 @@ export const en = {
     home: "Home",
     services: "Services",
     fleet: "MagMove Fleet",
-    whyChooseUs: "Why MagMove",
     contact: "Contact Us",
-    getQuote: "Get a Quote",
+    getQuote: "Check Price & Book",
   },
   hero: {
     subtitle: "Phuket's Elite Logistics",
@@ -13,7 +12,7 @@ export const en = {
     titleHighlight: "Premium",
     titleEnd: " Moving in Phuket",
     description: "A premium moving experience tailored for you. From high-end villas to corporate offices, we handle your world with precision and white-glove care.",
-    primaryButton: "Book now",
+    primaryButton: "Book Your Move",
     secondaryButton: "MagMove Fleet",
     insurance: "Fully Insured",
     peaceOfMind: "Peace of mind guaranteed",
@@ -91,7 +90,7 @@ export const en = {
   },
   footer: {
     desc: "Professional Logistics & White-Glove Service in Phuket. We move your world with care and precision.",
-    getQuote: "Get a Quote Today",
+    getQuote: "Check Price & Book Today",
     servicesCol: "Services",
     svcs: {
       res: "Residential Moving",
@@ -112,7 +111,7 @@ export const en = {
     copyright: "© 2024 MagMove Phuket. Professional Logistics & Premium Service.",
   },
   booking: {
-    heroTitle: "Request Premium Quote",
+    heroTitle: "Book Your Move",
     heroDesc: "Tell us about your moving needs, and our concierge team will reach out with a tailored logistics plan.",
     serviceType: "Service Type",
     houseMoving: "House, Office & Condo Moving",
@@ -124,9 +123,15 @@ export const en = {
     dateTime: "Preferred Date & Time",
     contactName: "Contact Name",
     contactPhone: "Contact Phone",
-    submitButton: "Request Premium Quote",
-    successMsg: "Your quote request has been securely submitted. A MagMove concierge will contact you shortly.",
+    submitButton: "Book Your Move",
+    successMsg: "Your booking request has been securely submitted. A MagMove concierge will contact you shortly.",
     errorMsg: "There was an error submitting your request. Please try again or contact us directly.",
-    returnHome: "Return to Home"
+    returnHome: "Return to Home",
+    distance: "Distance",
+    estimatedPrice: "Estimated Starting Price",
+    thb: "THB",
+    calculating: "Calculating...",
+    pickupPlaceholder: "Search for an address in Thailand...",
+    dropoffPlaceholder: "Where are we moving to?"
   }
 };
