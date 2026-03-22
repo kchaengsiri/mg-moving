@@ -4,8 +4,7 @@ import { Globe } from "lucide-react";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Navbar({ t, lang }: { t: any; lang: string }) {
   return (
-    <nav className="fixed top-0 w-full z-50 h-20 shadow-[0_4px_24px_rgba(10,20,40,0.18)]"
-         style={{ backgroundColor: "#002045" }}>
+    <nav className="fixed top-0 w-full z-50 h-20 bg-primary-container shadow-[0_4px_24px_rgba(10,20,40,0.18)]">
       <div className="flex justify-between items-center max-w-7xl mx-auto px-6 h-full">
 
         {/* Brand Logo */}
@@ -13,7 +12,7 @@ export default function Navbar({ t, lang }: { t: any; lang: string }) {
           <div className="w-8 h-8 bg-tertiary-fixed rounded-md flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
             <span className="text-on-tertiary-fixed font-bold text-lg leading-none">M</span>
           </div>
-          <div className="text-xl font-bold text-white font-headline tracking-tight group-hover:text-tertiary-fixed transition-colors duration-200">
+          <div className="text-xl font-bold text-tertiary-fixed font-headline tracking-tight">
             MagMove
           </div>
         </Link>
