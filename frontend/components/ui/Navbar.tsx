@@ -10,10 +10,10 @@ export default function Navbar({ t, lang }: { t: any; lang: string }) {
 
         {/* Brand Logo */}
         <Link href={`/${lang}`} className="flex items-center gap-3 group">
-          <div className="w-8 h-8 bg-[#D69E2E] rounded-md flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
-            <span className="text-white font-bold text-lg leading-none">M</span>
+          <div className="w-8 h-8 bg-tertiary-fixed rounded-md flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
+            <span className="text-on-tertiary-fixed font-bold text-lg leading-none">M</span>
           </div>
-          <div className="text-xl font-bold text-white font-headline tracking-tight group-hover:text-[#D69E2E] transition-colors duration-200">
+          <div className="text-xl font-bold text-white font-headline tracking-tight group-hover:text-tertiary-fixed transition-colors duration-200">
             MagMove
           </div>
         </Link>
@@ -30,7 +30,7 @@ export default function Navbar({ t, lang }: { t: any; lang: string }) {
             <a
               key={href}
               href={href}
-              className="font-headline tracking-tight text-sm font-semibold uppercase text-white/80 hover:text-[#D69E2E] transition-colors duration-200"
+              className="font-headline tracking-tight text-sm font-semibold uppercase text-white/80 hover:text-tertiary-fixed transition-colors duration-200"
             >
               {label}
             </a>
@@ -41,7 +41,7 @@ export default function Navbar({ t, lang }: { t: any; lang: string }) {
         <div className="flex items-center gap-6">
           <Link
             href={lang === "en" ? "/th" : "/en"}
-            className="flex items-center gap-2 text-white/70 hover:text-[#D69E2E] transition-colors duration-200 font-label font-bold text-sm tracking-wider"
+            className="flex items-center gap-2 text-white/70 hover:text-tertiary-fixed transition-colors duration-200 font-label font-bold text-sm tracking-wider"
             aria-label="Toggle language"
           >
             <Globe className="w-4 h-4" />
@@ -49,7 +49,7 @@ export default function Navbar({ t, lang }: { t: any; lang: string }) {
           </Link>
           <Link
             href={`/${lang}/book`}
-            className="bg-[#D69E2E] text-white px-6 py-3 rounded-md font-semibold text-sm hover:bg-[#B7851E] transition-all duration-300 active:scale-95 uppercase tracking-wider hidden sm:block shadow-[0_2px_12px_rgba(214,158,46,0.35)]"
+            className="bg-tertiary-fixed text-on-tertiary-fixed px-6 py-3 rounded-md font-semibold text-sm hover:opacity-90 transition-all duration-300 active:scale-95 uppercase tracking-wider hidden sm:block shadow-[0_2px_12px_rgba(214,158,46,0.35)]"
           >
             {t.nav.getQuote}
           </Link>
