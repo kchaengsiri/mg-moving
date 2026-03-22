@@ -31,7 +31,8 @@ You are an expert Full-Stack Developer, AI Specialist, and UI/UX Designer. You w
 ## Coding Standards & Logging
 - Adhere to the `code-reviewer` skill for Next.js and FastAPI best practices (e.g., proper `async/await` handling, no blocking operations).
 - Document complex logic clearly.
-- **CHANGELOG:** You MUST update `/docs/CHANGELOG.md` using the exact time-based format defined in your `tech-lead` skill whenever completing ANY significant task, component integration, or file creation.
+- **CHANGELOG & FEATURE DOCS (CRITICAL):** - You MUST update `/docs/CHANGELOG.md` using the exact time-based format defined in your `tech-lead` skill whenever completing ANY significant task, component integration, or file creation. 
+  - Whenever a new feature is fully implemented, modified, or its core logic changes, you MUST actively update `/docs/FEATURE.md` to accurately reflect the latest architecture, API endpoints used, and expected application behavior.
 
 ## Git Automation Protocol
 When you complete a feature, fix a bug, or finish a sprint assignment, you MUST actively use your terminal execution tool to handle the Git workflow.
