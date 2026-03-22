@@ -38,3 +38,4 @@
 - *11:55* - `Added` - Implemented Notification Settings UI and JSON endpoints.
 - *12:05* - `Added` - Implemented background webhook dispatcher in FastAPI `POST /api/bookings` handling Line Notify and Telegram operations autonomously.
 - *12:30* - `Changed` - Migrated deprecated LINE Notify integration to official LINE Messaging API (Push Message) across UI and backend dispatchers protecting operation continuity.
+- *13:20* - `Fixed` - Resolved `None` distance and price in LINE notifications by correcting the field name mismatch between frontend (`estimatedDistanceKm`/`estimatedPriceThb`) and backend Pydantic model (`distance`/`price`). Formatted output to `15.5 km` and `2,500 THB`.

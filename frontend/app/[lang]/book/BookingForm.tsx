@@ -203,8 +203,8 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
       moveTime: formData.get("moveTime"),
       contactName: formData.get("contactName"),
       contactPhone: formData.get("contactPhone"),
-      estimatedDistanceKm: distanceKm,
-      estimatedPriceThb: estimatedPrice
+      distance: distanceKm,
+      price: estimatedPrice ? Math.round(estimatedPrice) : null,
     };
 
     try {

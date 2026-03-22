@@ -7,6 +7,7 @@ import os
 import json
 import urllib.request
 import urllib.parse
+import urllib.error
 import asyncio
 from app.core.json_db import JsonDB
 
@@ -23,29 +24,43 @@ async def dispatch_notifications(booking_record: dict):
         line_user_id = settings.get("line_user_id")
         telegram_id = settings.get("telegram_chat_id")
         
+        raw_distance = booking_record.get('distance')
+        raw_price = booking_record.get('price')
+        distance_str = f"{raw_distance:.1f}" if raw_distance is not None else "N/A"
+        price_str = f"{int(raw_price):,}" if raw_price is not None else "N/A"
+
         message = (
             f"🚨 MagMove New Booking!\n"
             f"👤 Name: {booking_record.get('contactName')}\n"
             f"📞 Phone: {booking_record.get('contactPhone')}\n"
             f"📦 Service: {booking_record.get('serviceType')}\n"
-            f"🗺️ Distance: {booking_record.get('distance', 'N/A')} km\n"
-            f"💰 Est. Price: {booking_record.get('price', 'N/A')} THB"
+            f"🗺️ Distance: {distance_str} km\n"
+            f"💰 Est. Price: {price_str} THB"
         )
         
         def send():
             if line_channel_access_token and line_user_id:
-                try:
-                    payload = {
-                        "to": line_user_id,
-                        "messages": [{"type": "text", "text": message}]
-                    }
-                    line_data = json.dumps(payload).encode("utf-8")
-                    req = urllib.request.Request("https://api.line.me/v2/bot/message/push", data=line_data)
-                    req.add_header("Authorization", f"Bearer {line_channel_access_token}")
-                    req.add_header("Content-Type", "application/json")
-                    urllib.request.urlopen(req, timeout=5)
-                except Exception as e:
-                    print(f"LINE Messaging API Error: {e}")
+                # Validate LINE User ID format (must start with U/C/R and be exactly 33 chars)
+                if not (len(line_user_id) == 33 and line_user_id[0] in ('U', 'C', 'R')):
+                    print(f"LINE Dispatch Skipped: Invalid User ID '{line_user_id}'. Must be 33 chars starting with U, C, or R.")
+                else:
+                    try:
+                        payload = {
+                            "to": line_user_id,
+                            "messages": [{"type": "text", "text": message}]
+                        }
+                        line_data = json.dumps(payload).encode("utf-8")
+                        req = urllib.request.Request("https://api.line.me/v2/bot/message/push", data=line_data, method="POST")
+                        req.add_header("Authorization", f"Bearer {line_channel_access_token}")
+                        req.add_header("Content-Type", "application/json")
+                        urllib.request.urlopen(req, timeout=5)
+                    except urllib.error.HTTPError as e:
+                        error_body = e.read().decode('utf-8')
+                        print(f"LINE Messaging API HTTP {e.code} Error: {error_body}")
+                    except urllib.error.URLError as e:
+                        print(f"LINE Messaging API URL Error (network/timeout): {e.reason}")
+                    except Exception as e:
+                        print(f"LINE Messaging API Unexpected Error: {e}")
                     
             if telegram_id:
                 bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
