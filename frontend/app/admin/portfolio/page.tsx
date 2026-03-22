@@ -92,6 +92,10 @@ export default function AdminPortfolioPage() {
 
   const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+  // Resolve stored relative /api/ paths to full URLs for browser rendering
+  const resolveImageUrl = (url: string) =>
+    url.startsWith("/api/") ? `${API}${url}` : url;
+
   const fetchItems = async () => {
     try {
       const res = await fetch(`${API}/api/portfolio`);
@@ -172,7 +176,7 @@ export default function AdminPortfolioPage() {
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Photo</label>
               <ImageUploader
-                currentUrl={addForm.image_url}
+                currentUrl={resolveImageUrl(addForm.image_url)}
                 onUploaded={(url) => setAddForm({ ...addForm, image_url: url })}
                 API={API}
               />
@@ -238,7 +242,7 @@ export default function AdminPortfolioPage() {
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Photo</label>
                         <ImageUploader
-                          currentUrl={editForm.image_url}
+                          currentUrl={resolveImageUrl(editForm.image_url)}
                           onUploaded={(url) => setEditForm({ ...editForm, image_url: url })}
                           API={API}
                         />
@@ -263,7 +267,7 @@ export default function AdminPortfolioPage() {
                   <div className="grid grid-cols-12 gap-4 px-8 py-5 items-center hover:bg-slate-50 transition-colors">
                     <div className="col-span-2">
                       {item.image_url ? (
-                        <img src={item.image_url} alt={item.title} className="w-20 h-14 rounded-lg object-cover border border-slate-100 shadow-sm" />
+                        <img src={resolveImageUrl(item.image_url)} alt={item.title} className="w-20 h-14 rounded-lg object-cover border border-slate-100 shadow-sm" />
                       ) : (
                         <div className="w-20 h-14 rounded-lg bg-slate-100 flex items-center justify-center"><Images className="w-5 h-5 text-slate-300" /></div>
                       )}

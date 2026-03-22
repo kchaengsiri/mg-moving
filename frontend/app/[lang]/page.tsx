@@ -25,13 +25,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   // Server-side portfolio fetch — gracefully fails silently
   type PortfolioItem = { id: string; title: string; description: string; image_url: string; category: string };
   let portfolioItems: PortfolioItem[] = [];
+  const publicApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://backend:8000";
-    const res = await fetch(`${apiUrl}/api/portfolio`, { next: { revalidate: 60 } });
+    const internalApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://backend:8000";
+    const res = await fetch(`${internalApiUrl}/api/portfolio`, { next: { revalidate: 60 } });
     if (res.ok) portfolioItems = await res.json();
   } catch {
     // Portfolio section is non-critical — fail gracefully
   }
+
+  // Resolve image URL: if it's a relative /api/ path, prefix with the public API base URL
+  const resolveImageUrl = (url: string) =>
+    url.startsWith("/api/") ? `${publicApiUrl}${url}` : url;
 
   return (
     <main className="min-h-screen">
@@ -366,7 +371,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                     {item.image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={item.image_url}
+                        src={resolveImageUrl(item.image_url)}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
