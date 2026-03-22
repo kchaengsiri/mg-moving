@@ -36,3 +36,4 @@
 - *11:24* - `Changed` - Redesigned the Bookings Database `Action` column transforming naked text states into interactive, No-Line Dropdown layouts triggering `PATCH` operations autonomously.
 - *11:50* - `Changed` - Refined GEMINI.md scope for Portfolio and AI Chatbot.
 - *11:55* - `Added` - Implemented Notification Settings UI and JSON endpoints.
+- *12:05* - `Added` - Implemented background webhook dispatcher in FastAPI `POST /api/bookings` handling Line Notify and Telegram operations autonomously.
