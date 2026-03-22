@@ -5,7 +5,7 @@ import { Globe } from "lucide-react";
 export default function Navbar({ t, lang }: { t: any; lang: string }) {
   return (
     <nav className="fixed top-0 w-full z-50 h-20 shadow-[0_4px_24px_rgba(10,20,40,0.18)]"
-         style={{ backgroundColor: "#1A365D" }}>
+         style={{ backgroundColor: "#002045" }}>
       <div className="flex justify-between items-center max-w-7xl mx-auto px-6 h-full">
 
         {/* Brand Logo */}
