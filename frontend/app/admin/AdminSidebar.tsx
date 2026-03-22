@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CalendarDays, Settings, Bell, Box, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, CalendarDays, Settings, Bell, Box, ShieldCheck, Images } from "lucide-react";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export default function AdminSidebar() {
     { href: "/admin/bookings", label: "Bookings", icon: CalendarDays },
     { href: "/admin/settings/services", label: "Services", icon: Box },
     { href: "/admin/settings/notifications", label: "Notifications", icon: Bell },
+    { href: "/admin/portfolio", label: "Portfolio", icon: Images },
   ];
 
   return (

@@ -133,5 +133,11 @@ export const en = {
     calculating: "Calculating...",
     pickupPlaceholder: "Search for an address in Thailand...",
     dropoffPlaceholder: "Where are we moving to?"
+  },
+  ourWork: {
+    label: "Trusted by Phuket's Best",
+    title: "Our Work",
+    desc: "Browse a selection of our recent premium moving and packaging operations.",
+    noItems: "Portfolio coming soon.",
   }
 };

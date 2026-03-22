@@ -39,3 +39,8 @@
 - *12:05* - `Added` - Implemented background webhook dispatcher in FastAPI `POST /api/bookings` handling Line Notify and Telegram operations autonomously.
 - *12:30* - `Changed` - Migrated deprecated LINE Notify integration to official LINE Messaging API (Push Message) across UI and backend dispatchers protecting operation continuity.
 - *13:20* - `Fixed` - Resolved `None` distance and price in LINE notifications by correcting the field name mismatch between frontend (`estimatedDistanceKm`/`estimatedPriceThb`) and backend Pydantic model (`distance`/`price`). Formatted output to `15.5 km` and `2,500 THB`.
+
+**[2026-03-23]**
+- *01:05* - `Added` - Created Portfolio CRUD API (`GET`, `POST`, `PUT`, `DELETE` at `/api/portfolio`) with `portfolio.json` database.
+- *01:08* - `Added` - Built Admin Portfolio Manager at `/admin/portfolio` with full CRUD UI following White-Glove No-Line design system.
+- *01:12* - `Added` - Integrated "Our Work" public gallery section on landing page with EN/TH i18n. Renders conditionally via server-side fetch — invisible when portfolio is empty.
