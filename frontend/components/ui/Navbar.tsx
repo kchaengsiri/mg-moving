@@ -4,7 +4,8 @@ import { Globe } from "lucide-react";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Navbar({ t, lang }: { t: any; lang: string }) {
   return (
-    <nav className="fixed top-0 w-full z-50 h-20 bg-primary-container shadow-[0_4px_24px_rgba(10,20,40,0.18)]">
+    <nav className="fixed top-0 w-full z-50 h-20 shadow-[0_4px_24px_rgba(10,20,40,0.18)]"
+         style={{ backgroundColor: "#002045" }}>
       <div className="flex justify-between items-center max-w-7xl mx-auto px-6 h-full">
 
         {/* Brand Logo */}
