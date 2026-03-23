@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Script from "next/script"
 import { ArrowRight, CheckCircle2, AlertCircle, MapPin, Loader2, Tag } from "lucide-react";
 import MapPickerModal from "./MapPickerModal";
 
@@ -23,10 +24,10 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [services, setServices] = useState<ServiceType[]>([]);
   const [selectedServiceId, setSelectedServiceId] = useState<string>("");
-
   const [origin, setOrigin] = useState<PinState>(null);
   const [destination, setDestination] = useState<PinState>(null);
   const [mapTarget, setMapTarget] = useState<"origin" | "destination" | null>(null);
+  const [scriptReady, setScriptReady] = useState(false);
 
   const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -108,12 +109,29 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
     );
   }
 
+
+
+
   return (
     <>
+      {/* Leaflet CSS — loaded from CDN */}
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossOrigin=""
+      />
+
+      {/* Leaflet JS — loaded from CDN, deferred */}
+      <Script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        strategy="afterInteractive"
+        onLoad={() => setScriptReady(true)}
+      />
+
       {/* Map Picker Modal (rendered at top level to avoid z-index conflicts) */}
-      {mapTarget && (
+      {mapTarget && scriptReady && (
         <MapPickerModal
-        key={mapTarget}
+          key={mapTarget}
           title={mapTarget === "origin" ? t.booking.selectOrigin : t.booking.selectDestination}
           confirmLabel={t.booking.confirmLocation}
           onConfirm={handleMapConfirm}
