@@ -87,8 +87,10 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
       });
       if (!res.ok) throw new Error("Failed to submit");
       setStatus("success");
+      window.scrollTo(0, 0)
     } catch {
       setStatus("error");
+      window.scrollTo(0, 0)
     }
   };
 
