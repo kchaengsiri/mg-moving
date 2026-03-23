@@ -8,6 +8,11 @@ type Booking = {
   serviceType: string;
   pickupLocation?: string;
   dropoffLocation?: string;
+  originLabel?: string;
+  destLabel?: string;
+  distanceKm?: number;
+  estPrice?: number;
+  // Fallbacks for legacy/snake_case data
   origin_label?: string;
   dest_label?: string;
   distance_km?: number;
@@ -118,15 +123,15 @@ export default function AdminDashboard() {
                   </div>
                   <div className="flex items-center text-xs text-slate-500 mt-1">
                     <MapPin className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
-                    <span className="truncate" title={`${b.origin_label || b.pickupLocation || '—'} to ${b.dest_label || b.dropoffLocation || '—'}`}>
-                      {b.origin_label || b.pickupLocation || '—'} &rarr; {b.dest_label || b.dropoffLocation || '—'}
+                    <span className="truncate" title={`${b.originLabel || b.origin_label || b.pickupLocation || '—'} to ${b.destLabel || b.dest_label || b.dropoffLocation || '—'}`}>
+                      {b.originLabel || b.origin_label || b.pickupLocation || '—'} &rarr; {b.destLabel || b.dest_label || b.dropoffLocation || '—'}
                     </span>
                   </div>
-                  {(b.distance_km || b.est_price) && (
+                  {(b.distanceKm || b.distance_km || b.estPrice || b.est_price) && (
                     <div className="flex items-center text-[10px] text-slate-400 mt-1 font-semibold tracking-tight">
-                      {b.distance_km && <span>{b.distance_km.toFixed(1)} km</span>}
-                      {b.distance_km && b.est_price && <span className="mx-1">•</span>}
-                      {b.est_price && <span>฿{b.est_price.toLocaleString()}</span>}
+                      {(b.distanceKm || b.distance_km) && <span>{(b.distanceKm || b.distance_km || 0).toFixed(1)} km</span>}
+                      {(b.distanceKm || b.distance_km) && (b.estPrice || b.est_price) && <span className="mx-1">•</span>}
+                      {(b.estPrice || b.est_price) && <span>฿{(b.estPrice || b.est_price || 0).toLocaleString()}</span>}
                     </div>
                   )}
                 </div>

@@ -67,12 +67,12 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
 
     const payload = {
       serviceType: activeService ? activeService.name_en : selectedServiceId,
-      origin_lat: origin.lat,
-      origin_lng: origin.lng,
-      dest_lat: destination.lat,
-      dest_lng: destination.lng,
-      origin_label: origin.label,
-      dest_label: destination.label,
+      originLat: origin.lat,
+      originLng: origin.lng,
+      destLat: destination.lat,
+      destLng: destination.lng,
+      originLabel: origin.label,
+      destLabel: destination.label,
       moveDate: formData.get("moveDate"),
       moveTime: formData.get("moveTime"),
       contactName: formData.get("contactName"),

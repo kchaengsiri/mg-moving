@@ -44,29 +44,29 @@ async def dispatch_notifications(booking_record: dict):
         line_user_id = settings.get("line_user_id")
         telegram_id = settings.get("telegram_chat_id")
 
-        distance_km = booking_record.get("distance_km")
-        est_price = booking_record.get("est_price")
-        distance_str = f"{distance_km:.1f} km" if distance_km is not None else "N/A"
-        price_str = f"{int(est_price):,} THB" if est_price is not None else "N/A"
+        distanceKm = booking_record.get("distanceKm")
+        estPrice = booking_record.get("estPrice")
+        distance_str = f"{distanceKm:.1f} km" if distanceKm is not None else "N/A"
+        price_str = f"{int(estPrice):,}" if estPrice is not None else "N/A"
 
-        origin_lat = booking_record.get("origin_lat", "N/A")
-        origin_lng = booking_record.get("origin_lng", "N/A")
-        dest_lat = booking_record.get("dest_lat", "N/A")
-        dest_lng = booking_record.get("dest_lng", "N/A")
-        origin_label = booking_record.get("origin_label", "—")
-        dest_label = booking_record.get("dest_label", "—")
+        originLat = booking_record.get("originLat", "N/A")
+        originLng = booking_record.get("originLng", "N/A")
+        destLat = booking_record.get("destLat", "N/A")
+        destLng = booking_record.get("destLng", "N/A")
+        originLabel = booking_record.get("originLabel", "—")
+        destLabel = booking_record.get("destLabel", "—")
 
         message = (
             f"🚨 MagMove New Quote Request!\n"
             f"👤 Name: {booking_record.get('contactName')}\n"
             f"📞 Phone: {booking_record.get('contactPhone')}\n"
             f"📦 Service: {booking_record.get('serviceType')}\n"
-            f"📍 Origin: {origin_label}\n"
-            f"   ↳ Coords: {origin_lat}, {origin_lng}\n"
-            f"🏁 Destination: {dest_label}\n"
-            f"   ↳ Coords: {dest_lat}, {dest_lng}\n"
+            f"📍 Origin: {originLabel}\n"
+            f"   ↳ Coords: {originLat}, {originLng}\n"
+            f"🏁 Destination: {destLabel}\n"
+            f"   ↳ Coords: {destLat}, {destLng}\n"
             f"🗺️ Distance: {distance_str}\n"
-            f"💰 Est. Price: {price_str}"
+            f"💰 Est. Price: {price_str} THB"
         )
 
         def send():
@@ -113,12 +113,12 @@ async def dispatch_notifications(booking_record: dict):
 
 class BookingRequest(BaseModel):
     serviceType: str = Field(..., description="Service tier name")
-    origin_lat: float
-    origin_lng: float
-    dest_lat: float
-    dest_lng: float
-    origin_label: Optional[str] = None
-    dest_label: Optional[str] = None
+    originLat: float
+    originLng: float
+    destLat: float
+    destLng: float
+    originLabel: Optional[str] = None
+    destLabel: Optional[str] = None
     moveDate: str
     moveTime: str
     contactName: str
@@ -140,17 +140,17 @@ async def create_booking(booking: BookingRequest, background_tasks: BackgroundTa
     record["status"] = "pending_quote"
     record["createdAt"] = datetime.now(timezone.utc).isoformat()
 
-    # Backend OSRM distance calculation
-    distance_km = await calculate_distance_km(
-        booking.origin_lng, booking.origin_lat,
-        booking.dest_lng, booking.dest_lat
+    # Backend OSRM distance calculation using camelCase inputs
+    distanceKm = await calculate_distance_km(
+        booking.originLng, booking.originLat,
+        booking.destLng, booking.destLat
     )
     BASE_PRICE = 1500
     RATE_PER_KM = 50
-    est_price = round(BASE_PRICE + (distance_km * RATE_PER_KM)) if distance_km is not None else None
+    estPrice = round(BASE_PRICE + (distanceKm * RATE_PER_KM)) if distanceKm is not None else None
 
-    record["distance_km"] = distance_km
-    record["est_price"] = est_price
+    record["distanceKm"] = distanceKm
+    record["estPrice"] = estPrice
 
     try:
         await db.append(record)
