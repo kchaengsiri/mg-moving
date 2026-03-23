@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import dynamic from "next/dynamic";
 import { ArrowRight, CheckCircle2, AlertCircle, MapPin, Loader2, Tag } from "lucide-react";
-
-// Dynamically import map picker (leaflet is browser-only)
-const MapPickerModal = dynamic(() => import("./MapPickerModal"), { ssr: false });
+import MapPickerModal from "./MapPickerModal";
 
 type ServiceType = {
   id: string;

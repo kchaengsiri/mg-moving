@@ -1,57 +1,12 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import type { Icon as LeafletIcon } from "leaflet";
+import Script from "next/script";
 import { X, MapPin, CheckCircle2 } from "lucide-react";
 
 // Phuket default center
-const PHUKET_CENTER: [number, number] = [7.8804, 98.3923];
+const CENTER = { lat: 7.8804, lng: 98.3923 };
 
-const MARKER_OPTIONS = {
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41] as [number, number],
-  iconAnchor: [12, 41] as [number, number],
-  popupAnchor: [1, -34] as [number, number],
-  shadowSize: [41, 41] as [number, number],
-};
-
-// ── Draggable Marker ──────────────────────────────────────────────────────────
-function DraggableMarker({
-  position,
-  icon,
-  onMove,
-}: {
-  position: [number, number];
-  icon: LeafletIcon | null;
-  onMove: (lat: number, lng: number) => void;
-}) {
-  useMapEvents({
-    click(e) {
-      onMove(e.latlng.lat, e.latlng.lng);
-    },
-  });
-
-  if (!icon) return null;
-
-  return (
-    <Marker
-      position={position}
-      icon={icon}
-      draggable
-      eventHandlers={{
-        dragend(e) {
-          const pos = e.target.getLatLng();
-          onMove(pos.lat, pos.lng);
-        },
-      }}
-    />
-  );
-}
-
-// ── Map Picker Modal ──────────────────────────────────────────────────────────
 interface MapPickerModalProps {
   title: string;
   confirmLabel: string;
@@ -65,26 +20,17 @@ export default function MapPickerModal({
   onConfirm,
   onClose,
 }: MapPickerModalProps) {
-  const [position, setPosition] = useState<[number, number]>(PHUKET_CENTER);
-  const [label, setLabel] = useState<string>("");
+  const mapDivRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mapRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const markerRef = useRef<any>(null);
+
+  const [position, setPosition] = useState(CENTER);
+  const [label, setLabel] = useState("");
   const [geocoding, setGeocoding] = useState(false);
-  const [markerIcon, setMarkerIcon] = useState<LeafletIcon | null>(null);
-  const mounted = useRef(false);
+  const [scriptReady, setScriptReady] = useState(false);
 
-  // Dynamically import leaflet (browser-only) to create the icon
-  useEffect(() => {
-    if (mounted.current) return;
-    mounted.current = true;
-
-    import("leaflet").then((L) => {
-      // Fix default icon URL resolution
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (L.Icon.Default.prototype as any)._getIconUrl;
-      setMarkerIcon(new L.Icon(MARKER_OPTIONS));
-    });
-  }, []);
-
-  // Reverse-geocode whenever position changes
   const reverseGeocode = useCallback(async (lat: number, lng: number) => {
     setGeocoding(true);
     try {
@@ -101,84 +47,125 @@ export default function MapPickerModal({
     }
   }, []);
 
+  // Init map after Leaflet CDN script is loaded
   useEffect(() => {
-    reverseGeocode(PHUKET_CENTER[0], PHUKET_CENTER[1]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!scriptReady || !mapDivRef.current || mapRef.current) return;
 
-  const handleMove = useCallback(
-    (lat: number, lng: number) => {
-      setPosition([lat, lng]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const L = (window as any).L;
+    if (!L) return;
+
+    const map = L.map(mapDivRef.current).setView([CENTER.lat, CENTER.lng], 12);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    const marker = L.marker([CENTER.lat, CENTER.lng], { draggable: true }).addTo(map);
+
+    const onMove = (lat: number, lng: number) => {
+      setPosition({ lat, lng });
       reverseGeocode(lat, lng);
-    },
-    [reverseGeocode]
-  );
+    };
+
+    marker.on("dragend", () => {
+      const { lat, lng } = marker.getLatLng();
+      onMove(lat, lng);
+    });
+
+    map.on("click", (e: { latlng: { lat: number; lng: number } }) => {
+      const { lat, lng } = e.latlng;
+      marker.setLatLng([lat, lng]);
+      onMove(lat, lng);
+    });
+
+    mapRef.current = map;
+    markerRef.current = marker;
+
+    // Initial reverse geocode
+    reverseGeocode(CENTER.lat, CENTER.lng);
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, [scriptReady, reverseGeocode]);
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,32,69,0.25)] w-full max-w-2xl overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-primary-container">
-          <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-tertiary-fixed" />
-            <h2 className="text-white font-headline font-bold text-base tracking-tight">{title}</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="text-white/60 hover:text-white transition-colors p-1 rounded-md"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <>
+      {/* Leaflet CSS — loaded from CDN */}
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossOrigin=""
+      />
 
-        {/* Instructions */}
-        <p className="text-xs text-secondary font-body px-6 pt-3 pb-1">
-          Click anywhere on the map or drag the marker to pin the exact location.
-        </p>
+      {/* Leaflet JS — loaded from CDN, deferred */}
+      <Script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        strategy="afterInteractive"
+        onLoad={() => setScriptReady(true)}
+      />
 
-        {/* Map */}
-        <div className="h-[360px] w-full">
-          <MapContainer
-            center={PHUKET_CENTER}
-            zoom={12}
-            className="h-full w-full"
-            scrollWheelZoom
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <DraggableMarker position={position} icon={markerIcon} onMove={handleMove} />
-          </MapContainer>
-        </div>
-
-        {/* Location label + confirm */}
-        <div className="px-6 py-4 bg-surface-container-lowest border-t border-surface-container flex flex-col gap-3">
-          <div className="text-sm font-body text-on-background min-h-[2.5rem] flex items-start gap-2">
-            <MapPin className="w-4 h-4 text-tertiary-fixed mt-0.5 flex-shrink-0" />
-            <span className={`line-clamp-2 ${geocoding ? "text-secondary animate-pulse" : ""}`}>
-              {geocoding ? "Locating..." : label || "Drag the marker to your location"}
-            </span>
-          </div>
-          <div className="flex gap-3 justify-end">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div className="bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,32,69,0.25)] w-full max-w-2xl overflow-hidden flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4 bg-primary-container">
+            <div className="flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-tertiary-fixed" />
+              <h2 className="text-white font-headline font-bold text-base tracking-tight">{title}</h2>
+            </div>
             <button
               onClick={onClose}
-              className="px-5 py-2.5 rounded-md text-sm font-semibold font-body text-secondary hover:bg-surface-container transition-colors"
+              className="text-white/60 hover:text-white transition-colors p-1 rounded-md"
+              aria-label="Close"
             >
-              Cancel
+              <X className="w-5 h-5" />
             </button>
-            <button
-              onClick={() => onConfirm(position[0], position[1], label)}
-              disabled={geocoding || !markerIcon}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed text-sm font-bold font-body hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              {confirmLabel}
-            </button>
+          </div>
+
+          {/* Instructions */}
+          <p className="text-xs text-secondary font-body px-6 pt-3 pb-1">
+            Click anywhere on the map or drag the marker to pin the exact location.
+          </p>
+
+          {/* Map container */}
+          <div className="h-[360px] w-full relative">
+            {!scriptReady && (
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-100 z-10">
+                <span className="text-secondary text-sm font-body animate-pulse">Loading map…</span>
+              </div>
+            )}
+            <div ref={mapDivRef} className="h-full w-full" />
+          </div>
+
+          {/* Location label + confirm */}
+          <div className="px-6 py-4 bg-surface-container-lowest border-t border-surface-container flex flex-col gap-3">
+            <div className="text-sm font-body text-on-background min-h-[2.5rem] flex items-start gap-2">
+              <MapPin className="w-4 h-4 text-tertiary-fixed mt-0.5 flex-shrink-0" />
+              <span className={`line-clamp-2 ${geocoding ? "text-secondary animate-pulse" : ""}`}>
+                {geocoding ? "Locating…" : label || "Drag the marker or click the map to set location"}
+              </span>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={onClose}
+                className="px-5 py-2.5 rounded-md text-sm font-semibold font-body text-secondary hover:bg-surface-container transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => onConfirm(position.lat, position.lng, label)}
+                disabled={geocoding || !scriptReady}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed text-sm font-bold font-body hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                {confirmLabel}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
