@@ -137,7 +137,7 @@ async def create_booking(booking: BookingRequest, background_tasks: BackgroundTa
     booking_id = str(uuid.uuid4())
     record = booking.model_dump()
     record["id"] = booking_id
-    record["status"] = "pending_quote"
+    record["status"] = "pending"
     record["createdAt"] = datetime.now(timezone.utc).isoformat()
 
     # Backend OSRM distance calculation using camelCase inputs
@@ -155,7 +155,7 @@ async def create_booking(booking: BookingRequest, background_tasks: BackgroundTa
     try:
         await db.append(record)
         background_tasks.add_task(dispatch_notifications, record)
-        return BookingResponse(id=booking_id, status="pending_quote", message="Quote request received")
+        return BookingResponse(id=booking_id, status="pending", message="Quote request received")
     except Exception as e:
         print(f"Database error: {e}")
         raise HTTPException(status_code=500, detail="Internal server error while processing booking.")
