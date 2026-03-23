@@ -1,6 +1,7 @@
 # Changelog
 
 **[2026-03-23]**
+- *13:10* - `fix` - **Admin Booking Table**: Synchronized location field names (`origin_label`/`dest_label`) and added legacy fallbacks (`pickupLocation`/`dropoffLocation`). Added distance (km) and estimated price badges to the Logistics column.
 - *10:38* - `feat` - **Interactive Map Picker**: Replaced Nominatim text search inputs in `/book` with a `react-leaflet` modal map picker. Users drag a pin for exact coordinates. Reverse geocoding provides the display label.
 - *10:38* - `feat` - **Professional Quoting System**: Removed live frontend OSRM price calculation. Book form now shows static "Starting at 1,500 THB*" banner with concierge disclaimer. All logic moved to backend.
 - *10:38* - `feat` - **Backend OSRM Calculation**: `POST /api/bookings` now accepts `origin_lat/lng` and `dest_lat/lng` floats. FastAPI calls OSRM server-side to calculate `distance_km` and `est_price` (1,500 + km×50 THB), saves them to `bookings.json`. API response returns only `{id, status, message}`.

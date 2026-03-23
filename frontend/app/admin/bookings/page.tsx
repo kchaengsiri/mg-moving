@@ -6,8 +6,12 @@ import { Settings, CheckCircle2, CircleDashed, Users, Mail, Phone, CalendarDays,
 type Booking = {
   id: string;
   serviceType: string;
-  pickupLocation: string;
-  dropoffLocation: string;
+  pickupLocation?: string;
+  dropoffLocation?: string;
+  origin_label?: string;
+  dest_label?: string;
+  distance_km?: number;
+  est_price?: number;
   moveDate: string;
   moveTime: string;
   contactName: string;
@@ -112,10 +116,19 @@ export default function AdminDashboard() {
                   <div className="flex items-center text-slate-800 font-medium truncate mb-1">
                     <span className="bg-slate-100 px-2 py-0.5 rounded text-xs mr-2 font-semibold tracking-wide text-primary">{b.serviceType}</span>
                   </div>
-                  <div className="flex items-center text-xs text-slate-500 truncate mt-1">
+                  <div className="flex items-center text-xs text-slate-500 mt-1">
                     <MapPin className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
-                    <span className="truncate">{b.pickupLocation} &rarr; {b.dropoffLocation}</span>
+                    <span className="truncate" title={`${b.origin_label || b.pickupLocation || '—'} to ${b.dest_label || b.dropoffLocation || '—'}`}>
+                      {b.origin_label || b.pickupLocation || '—'} &rarr; {b.dest_label || b.dropoffLocation || '—'}
+                    </span>
                   </div>
+                  {(b.distance_km || b.est_price) && (
+                    <div className="flex items-center text-[10px] text-slate-400 mt-1 font-semibold tracking-tight">
+                      {b.distance_km && <span>{b.distance_km.toFixed(1)} km</span>}
+                      {b.distance_km && b.est_price && <span className="mx-1">•</span>}
+                      {b.est_price && <span>฿{b.est_price.toLocaleString()}</span>}
+                    </div>
+                  )}
                 </div>
 
                 {/* Schedule Constraints */}
