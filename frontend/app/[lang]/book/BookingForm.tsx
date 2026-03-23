@@ -113,6 +113,7 @@ export default function BookingForm({ t, lang }: { t: any; lang: string }) {
       {/* Map Picker Modal (rendered at top level to avoid z-index conflicts) */}
       {mapTarget && (
         <MapPickerModal
+        key={mapTarget}
           title={mapTarget === "origin" ? t.booking.selectOrigin : t.booking.selectDestination}
           confirmLabel={t.booking.confirmLocation}
           onConfirm={handleMapConfirm}
