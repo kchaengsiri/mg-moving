@@ -1,37 +1,31 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import type { Icon as LeafletIcon } from "leaflet";
 import { X, MapPin, CheckCircle2 } from "lucide-react";
-import L from "leaflet";
-
-// Fix default icon paths for Next.js (webpack asset handling)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-});
-
-const GOLD_ICON = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
 
 // Phuket default center
 const PHUKET_CENTER: [number, number] = [7.8804, 98.3923];
 
+const MARKER_OPTIONS = {
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41] as [number, number],
+  iconAnchor: [12, 41] as [number, number],
+  popupAnchor: [1, -34] as [number, number],
+  shadowSize: [41, 41] as [number, number],
+};
+
+// ── Draggable Marker ──────────────────────────────────────────────────────────
 function DraggableMarker({
   position,
+  icon,
   onMove,
 }: {
   position: [number, number];
+  icon: LeafletIcon | null;
   onMove: (lat: number, lng: number) => void;
 }) {
   useMapEvents({
@@ -40,15 +34,16 @@ function DraggableMarker({
     },
   });
 
+  if (!icon) return null;
+
   return (
     <Marker
       position={position}
-      icon={GOLD_ICON}
+      icon={icon}
       draggable
       eventHandlers={{
         dragend(e) {
-          const m = e.target;
-          const pos = m.getLatLng();
+          const pos = e.target.getLatLng();
           onMove(pos.lat, pos.lng);
         },
       }}
@@ -56,6 +51,7 @@ function DraggableMarker({
   );
 }
 
+// ── Map Picker Modal ──────────────────────────────────────────────────────────
 interface MapPickerModalProps {
   title: string;
   confirmLabel: string;
@@ -72,6 +68,21 @@ export default function MapPickerModal({
   const [position, setPosition] = useState<[number, number]>(PHUKET_CENTER);
   const [label, setLabel] = useState<string>("");
   const [geocoding, setGeocoding] = useState(false);
+  const [markerIcon, setMarkerIcon] = useState<LeafletIcon | null>(null);
+  const mounted = useRef(false);
+
+  // Dynamically import leaflet (browser-only) to create the icon
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+
+    import("leaflet").then((L) => {
+      // Fix default icon URL resolution
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      delete (L.Icon.Default.prototype as any)._getIconUrl;
+      setMarkerIcon(new L.Icon(MARKER_OPTIONS));
+    });
+  }, []);
 
   // Reverse-geocode whenever position changes
   const reverseGeocode = useCallback(async (lat: number, lng: number) => {
@@ -92,7 +103,7 @@ export default function MapPickerModal({
 
   useEffect(() => {
     reverseGeocode(PHUKET_CENTER[0], PHUKET_CENTER[1]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMove = useCallback(
@@ -138,11 +149,11 @@ export default function MapPickerModal({
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <DraggableMarker position={position} onMove={handleMove} />
+            <DraggableMarker position={position} icon={markerIcon} onMove={handleMove} />
           </MapContainer>
         </div>
 
-        {/* Location Label + Confirm */}
+        {/* Location label + confirm */}
         <div className="px-6 py-4 bg-surface-container-lowest border-t border-surface-container flex flex-col gap-3">
           <div className="text-sm font-body text-on-background min-h-[2.5rem] flex items-start gap-2">
             <MapPin className="w-4 h-4 text-tertiary-fixed mt-0.5 flex-shrink-0" />
@@ -159,7 +170,7 @@ export default function MapPickerModal({
             </button>
             <button
               onClick={() => onConfirm(position[0], position[1], label)}
-              disabled={geocoding}
+              disabled={geocoding || !markerIcon}
               className="flex items-center gap-2 px-6 py-2.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed text-sm font-bold font-body hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
             >
               <CheckCircle2 className="w-4 h-4" />
