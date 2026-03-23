@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { X, MapPin, CheckCircle2 } from "lucide-react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 // Fix default icon paths for Next.js (webpack asset handling)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
